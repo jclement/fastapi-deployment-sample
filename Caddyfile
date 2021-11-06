@@ -1,0 +1,12 @@
+:80
+
+root * /usr/share/caddy/
+file_server browse
+
+handle_path /api/* {
+	reverse_proxy backend:8000 {
+        header_up Host {upstream_hostport}
+        header_up X-Real-IP {remote_addr}
+        header_up X-Forwarded-Host {host}
+    }
+}
