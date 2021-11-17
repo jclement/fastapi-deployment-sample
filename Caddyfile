@@ -1,8 +1,5 @@
 :80
 
-root * /usr/share/caddy/
-file_server browse
-
 handle_path /api/* {
 	reverse_proxy backend:8000 {
         header_up Host {upstream_hostport}
@@ -10,3 +7,10 @@ handle_path /api/* {
         header_up X-Forwarded-Host {host}
     }
 }
+
+handle {
+        root * /usr/share/caddy/
+        try_files {path} {file} /index.html
+        file_server
+}
+
